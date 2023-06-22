@@ -1,0 +1,80 @@
+body {
+    margin: 0;
+}
+
+.color-verde {
+    background: #c300ff;
+}
+
+.color-azul {
+    background: #0f9af6;
+}
+
+.pantallaCompleta {
+    width: 100vw;
+    height: 100vh;
+}
+
+.transparente {
+    background-color: #0099ff00;
+    border: #0099ff00;
+}
+
+.cabeza {
+    background-image: url("../images/fotoGrupal.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.gradiente {
+    background: linear-gradient(to right, #ff00004f, #00ff005d);
+    background-size: 200% auto;
+    animation: cambio-color 5s linear infinite;
+}
+
+.blanco {
+    color: white;
+}
+
+@keyframes cambio-color {
+    0% {
+        background-position: 0% center;
+    }
+
+    50% {
+        background-position: 100% center;
+    }
+
+    100% {
+        background-position: 0% center;
+    }
+}
+
+.centrado {
+    text-align: center;
+    justify-content: center;
+}
+
+.centroVertical {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.imagen {
+    width: 50%;
+}
+
+.color-azulOscuro {
+    background-color: #1d1db5;
+}
+
+.left-2 {
+    margin-left: 2vw;
+}
+
+.socialMedia {
+    width: 2vw;
+    margin-left: 2vw;
+}

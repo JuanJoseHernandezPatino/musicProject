@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "d": "nodemon app.js"
+    "d": "nodemon app.js",
+    "e": "npm app.js"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +13,8 @@
   "dependencies": {
     "body-parser": "^1.20.2",
     "express": "^4.18.2",
-    "nodemon": "^2.0.22"
+    "express-session": "^1.17.3",
+    "nodemon": "^2.0.22",
+    "path": "^0.12.7"
   }
 }
