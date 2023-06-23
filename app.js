@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 let path = require("path");
 let rutas = require("./routes/rutas")
 
-// Importar el módulo express-session
 const session = require("express-session");
 
 app.use(express.static(path.join(__dirname, "public")));
