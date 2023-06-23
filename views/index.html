@@ -70,7 +70,7 @@
 
                         <div class="mb-1 mt-1">
                             <label class="form-label" for="exampleCheck1">¿Es usted maestro de música?</label>
-                            <select name="" onchange="monitoria(value)" class="form-select">
+                            <select name="" onchange="monitoria(value)" id="sltMaestro" class="form-select">
                                 <option value="">--seleccione una opcion--</option>
                                 <option value="Si">Si</option>
                                 <option value="No">No</option>
@@ -81,12 +81,11 @@
                             <label for="contrasenaDos" class="form-label">Municipio de monitoria</label>
                             <input type="text" class="form-control" id="txtMunicipioRegistro">
                         </div>
-
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-primary" onclick="guardarRegistro()">Guardar</button>
                 </div>
             </div>
         </div>
