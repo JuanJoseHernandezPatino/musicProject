@@ -1,0 +1,3 @@
+instance ID: MSSQLSERVER
+contraseña: juanjo2023...
+specify SQL Server administrators: DESKTOP-86VH121\calip(calip)
