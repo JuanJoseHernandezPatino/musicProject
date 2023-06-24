@@ -9,7 +9,6 @@ let confi = {
         encrypt: true,
         trustServerCertificate: true,
     }
-    //'Server=,1433;Database=musicProject;User Id=sa;Password=juanjo2023...;Encrypt=true'
 }
 
 async function getConexion() {
@@ -21,4 +20,4 @@ async function getConexion() {
     }
 }
 
-getConexion()
+module.exports.getConexion = getConexion;
