@@ -33,7 +33,7 @@
 
                             <div class="input-group">
 
-                                <input id="passwordLogin" type="text" class="form-control" placeholder="Contraseña"
+                                <input id="passwordLogin" type="password" class="form-control" placeholder="Contraseña"
                                     aria-label="Recipient's username" aria-describedby="button-addon2">
                                 <button class="btn btn-outline-secondary" type="button" onclick="cambioIcono()">
                                     <div id="btnVerContrasena" style="display: block;">
@@ -66,7 +66,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="limpiarLogin()"
                         data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Iniciar Sesion</button>
+                    <button type="button" onclick="loguearse()" class="btn btn-primary">Iniciar Sesion</button>
                 </div>
             </div>
         </div>
@@ -77,8 +77,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Registrarse</h5>
-                    <button type="button" onclick="limpiarRegistro()" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
+                    <button type="button" id="btnCerrarRegistro" onclick="limpiarRegistro()" class="btn-close"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form>

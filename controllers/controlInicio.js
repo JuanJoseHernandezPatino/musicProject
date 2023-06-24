@@ -47,7 +47,6 @@ async function guardarRegistro(req, res) {
     }
 }
 
-
 function generarID() {
     const fecha = new Date();
 
@@ -62,9 +61,33 @@ function generarID() {
     return id;
 }
 
+async function logueo(req, res) {
+    try {
+        let datos = req.body;
+        let correo = datos.txtCorreoLogin;
+        let password = datos.passwordLogin;
+
+        let pool = await conexion.getConexion(); // Esperar a que se resuelva la promesa
+        //let result = await pool.request().query(`SELECT * FROM usuarios`);
+
+        let result = await pool.request().query(`SELECT * FROM usuarios WHERE correo = '${correo}' and contrasena = '${password}'`);
+        let recordset = result.recordset;
+
+        recordset.forEach(row => {
+            console.log(row.id); // Accede a la columna "id" de la fila actual
+            console.log(row.nombre); // Accede a la columna "nombre" de la fila actual
+            // Accede a otras columnas de la fila según sea necesario
+        });
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 module.exports = {
-    guardarRegistro: guardarRegistro
+    guardarRegistro: guardarRegistro,
+    logueo: logueo
 }
 
 /*
