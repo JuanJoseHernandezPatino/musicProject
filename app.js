@@ -7,9 +7,13 @@ let rutas = require("./routes/rutas")
 
 const session = require("express-session");
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "views")));
-app.use("/rutas", rutas)
+app.use("/", rutas)
 
 app.use(
   session({
