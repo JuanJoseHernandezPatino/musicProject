@@ -54,12 +54,19 @@ async function guardarRegistro() {
             return;
         }
 
+        let rol = "";
+        if (sltMaestro.value == "Si") {
+            rol = "maestro"
+        } else {
+            rol = "usuario"
+        }
+
         let datos = {
             txtNombresRegistro: txtNombresRegistro.value,
             txtApellidosRegistro: txtApellidosRegistro.value,
             txtCorreoRegistro: txtCorreoRegistro.value,
             txtContrasenaRegistro: txtContrasenaRegistro.value,
-            sltMaestro: sltMaestro.value,
+            sltMaestro: rol,
             txtContrasenaconfirmacion: txtContrasenaconfirmacion.value,
             txtMunicipioRegistro: txtMunicipioRegistro.value
         }
@@ -117,22 +124,34 @@ function cambioIcono() {
 }
 
 async function loguearse() {
-    let txtCorreologin = document.getElementById("txtCorreologin");
-    let passwordLogin = document.getElementById("passwordLogin");
-    if (txtCorreologin.value == "") {
-        txtCorreologin.setCustomValidity("Este campo es obligatorio.");
-        txtCorreologin.reportValidity();
-        return;
-    } else if (passwordLogin.value == "") {
-        passwordLogin.setCustomValidity("Este campo es obligatorio.");
-        passwordLogin.reportValidity();
-        return;
+    try {
+
+        let txtCorreologin = document.getElementById("txtCorreologin");
+        let passwordLogin = document.getElementById("passwordLogin");
+        if (txtCorreologin.value == "") {
+            txtCorreologin.setCustomValidity("Este campo es obligatorio.");
+            txtCorreologin.reportValidity();
+            return;
+        } else if (passwordLogin.value == "") {
+            passwordLogin.setCustomValidity("Este campo es obligatorio.");
+            passwordLogin.reportValidity();
+            return;
+        }
+        let datos = {
+            txtCorreologin: txtCorreologin.value,
+            passwordLogin: passwordLogin.value
+        }
+        let respuesta = await server("post", datos, "/loguearse")
+        if (respuesta == "loguear") {
+            window.location.href = "/principal";
+        } else {
+            if (respuesta == "noExiste") {
+                alert("Usuario o contraseña invalidos")
+            }
+        }
+    } catch (error) {
+        alert("Error crítico, contactar al desarrollador")
     }
-    let datos = {
-        txtCorreologin: txtCorreologin.value,
-        passwordLogin: passwordLogin.value
-    }
-    let respuesta = server("post", datos, "/loguearse")
 
 }
 

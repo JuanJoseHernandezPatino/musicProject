@@ -1,6 +1,7 @@
 const { Int } = require("mssql");
 const conexion = require("./conexionbd")
 const sql = require("mssql")
+let path = require("path");
 
 async function guardarRegistro(req, res) {
     try {
@@ -24,17 +25,17 @@ async function guardarRegistro(req, res) {
             .input('apellidos', sql.VarChar, txtApellidosRegistro)
             .input('correo', sql.VarChar, txtCorreoRegistro)
             .input('password', sql.VarChar, txtContrasenaRegistro)
-            .input('maestro', sql.VarChar, sltMaestro)
+            .input('rol', sql.VarChar, sltMaestro)
             .input('municipio', sql.VarChar, txtMunicipioRegistro)
             .query(`
-          INSERT INTO usuarios (id, nombre, apellidos, correo, contrasena, maestro, municipio)
+          INSERT INTO usuarios (id, nombre, apellidos, correo, contrasena, rol, municipio)
           VALUES (
             @id,
             @nombres,
             @apellidos,
             @correo,
             @password,
-            @maestro,
+            @rol,
             @municipio
           )
         `);
@@ -64,33 +65,41 @@ function generarID() {
 async function logueo(req, res) {
     try {
         let datos = req.body;
-        let correo = datos.txtCorreoLogin;
+        let correo = datos.txtCorreologin
         let password = datos.passwordLogin;
 
         let pool = await conexion.getConexion(); // Esperar a que se resuelva la promesa
         //let result = await pool.request().query(`SELECT * FROM usuarios`);
 
         let result = await pool.request().query(`SELECT * FROM usuarios WHERE correo = '${correo}' and contrasena = '${password}'`);
-        let recordset = result.recordset;
+        //let result = await pool.request().query(`SELECT * FROM usuarios WHERE correo = 'cali@gmail.com' and contrasena = 'juan'`);
+        if (result.recordset) {
+            let recordset = result.recordset[0];
+            let nombreCompleto = recordset.nombre + " " + recordset.apellidos;
+            req.session.nombre = nombreCompleto;
+            req.session.rol = recordset.rol;
+            //console.log(req.session)
 
-        recordset.forEach(row => {
-            console.log(row.id); // Accede a la columna "id" de la fila actual
-            console.log(row.nombre); // Accede a la columna "nombre" de la fila actual
-            // Accede a otras columnas de la fila según sea necesario
-        });
+            res.send({ respuesta: "loguear" })
+        } else {
+            res.send({ respuesta: "noExiste" })
+        }
 
     } catch (error) {
         console.log(error);
     }
 }
 
+async function cargarPrincipal(req, res) {
+    if (req.session.nombre) {
+        res.sendFile(path.join(__dirname, "./../views/pagPrincipal.html"))
+    } else {
+        res.sendFile(path.join(__dirname, "./../views/index.html"));
+    }
+}
 
 module.exports = {
     guardarRegistro: guardarRegistro,
-    logueo: logueo
+    logueo: logueo,
+    cargarPrincipal: cargarPrincipal
 }
-
-/*
-
-
-*/
