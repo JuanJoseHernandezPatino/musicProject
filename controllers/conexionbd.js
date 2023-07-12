@@ -13,10 +13,10 @@ let confi = {
 
 async function getConexion() {
     try {
-        let pool = await sql.connect(confi);
+        const pool = await sql.connect(confi);
         return pool;
-    } catch (err) {
-        console.log(err)
+    } catch (error) {
+        console.log(error);
     }
 }
 

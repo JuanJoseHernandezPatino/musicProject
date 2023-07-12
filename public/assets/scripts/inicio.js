@@ -1,4 +1,4 @@
-//#region funciones del registro
+//#region funciones del registro    
 function monitoria(value) {
     if (value == "Si") {
         document.getElementById("pnlMunicipioRegistro").style.display = "block";
@@ -54,12 +54,19 @@ async function guardarRegistro() {
             return;
         }
 
+        let rol = "";
+        if (sltMaestro.value == "Si") {
+            rol = "maestro"
+        } else {
+            rol = "usuario"
+        }
+
         let datos = {
             txtNombresRegistro: txtNombresRegistro.value,
             txtApellidosRegistro: txtApellidosRegistro.value,
             txtCorreoRegistro: txtCorreoRegistro.value,
             txtContrasenaRegistro: txtContrasenaRegistro.value,
-            sltMaestro: sltMaestro.value,
+            sltMaestro: rol,
             txtContrasenaconfirmacion: txtContrasenaconfirmacion.value,
             txtMunicipioRegistro: txtMunicipioRegistro.value
         }
@@ -68,6 +75,8 @@ async function guardarRegistro() {
         if (respuesta == "exito") {
             alert("Datos cargados correctamente")
             limpiarRegistro()
+            var btnCerrarRegistro = document.getElementById('btnCerrarRegistro');
+            btnCerrarRegistro.click();
         } else if (respuesta == "error") {
             alert("Error al cargar los datos, contacte al desarrollador de la aplicacion")
         }
@@ -84,6 +93,66 @@ function limpiarRegistro() {
     document.getElementById("txtContrasenaconfirmacion").value = "";
     document.getElementById("sltMaestro").value = "";
     document.getElementById("txtMunicipioRegistro").value = "";
+}
+
+//#endregion
+
+function limpiarLogin() {
+    document.getElementById("txtContrasenaLogin").value = "";
+    document.getElementById("txtCorreologin").value = "";
+}
+
+let btnContraseña = false;
+function cambioIcono() {
+    if (btnContraseña == false) {
+        btnContraseña = true;
+        document.getElementById("passwordLogin").type = "password"
+        document.getElementById("imgVer").style.display = "block"
+        document.getElementById("imgNoVer").style.display = "none"
+        var input = document.getElementById('passwordLogin');
+        input.focus();
+    } else {
+        if (btnContraseña == true) {
+            btnContraseña = false
+            document.getElementById("passwordLogin").type = "text"
+            document.getElementById("imgVer").style.display = "none"
+            document.getElementById("imgNoVer").style.display = "block"
+            var input = document.getElementById('passwordLogin');
+            input.focus();
+        }
+    }
+}
+
+async function loguearse() {
+    try {
+
+        let txtCorreologin = document.getElementById("txtCorreologin");
+        let passwordLogin = document.getElementById("passwordLogin");
+        if (txtCorreologin.value == "") {
+            txtCorreologin.setCustomValidity("Este campo es obligatorio.");
+            txtCorreologin.reportValidity();
+            return;
+        } else if (passwordLogin.value == "") {
+            passwordLogin.setCustomValidity("Este campo es obligatorio.");
+            passwordLogin.reportValidity();
+            return;
+        }
+        let datos = {
+            txtCorreologin: txtCorreologin.value,
+            passwordLogin: passwordLogin.value
+        }
+        let respuesta = await server("post", datos, "/loguearse")
+        if (respuesta == "loguear") {
+            window.location.href = "/principal";
+        } else {
+            if (respuesta == "noExiste") {
+                alert("Usuario o contraseña invalidos")
+            }
+        }
+    } catch (error) {
+        alert("Error crítico, contactar al desarrollador")
+    }
+
 }
 
 function server(tipoPeticion, datos, ruta) {
@@ -105,23 +174,4 @@ function server(tipoPeticion, datos, ruta) {
             .then(data => resolve(data.respuesta))
             .catch(error => reject(error));
     });
-}
-//#endregion
-
-function limpiarLogin() {
-    document.getElementById("txtContrasenaLogin").value = "";
-    document.getElementById("txtCorreologin").value = "";
-}
-
-let btnContraseña = false;
-function cambioIcono() {
-    var button = document.getElementById('btnVerContrasena');
-
-    if (button.disabled) {
-        document.getElementById("imgVer").style.display = "block"
-        document.getElementById("imgNoVer").style.display = "none"
-    } else {
-        document.getElementById("imgVer").style.display = "none"
-        document.getElementById("imgNoVer").style.display = "block"
-    }
 }

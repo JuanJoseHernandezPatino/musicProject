@@ -1,6 +1,7 @@
 const { Int } = require("mssql");
 const conexion = require("./conexionbd")
 const sql = require("mssql")
+let path = require("path");
 
 async function guardarRegistro(req, res) {
     try {
@@ -24,17 +25,17 @@ async function guardarRegistro(req, res) {
             .input('apellidos', sql.VarChar, txtApellidosRegistro)
             .input('correo', sql.VarChar, txtCorreoRegistro)
             .input('password', sql.VarChar, txtContrasenaRegistro)
-            .input('maestro', sql.VarChar, sltMaestro)
+            .input('rol', sql.VarChar, sltMaestro)
             .input('municipio', sql.VarChar, txtMunicipioRegistro)
             .query(`
-          INSERT INTO usuarios (id, nombre, apellidos, correo, contrasena, maestro, municipio)
+          INSERT INTO usuarios (id, nombre, apellidos, correo, contrasena, rol, municipio)
           VALUES (
             @id,
             @nombres,
             @apellidos,
             @correo,
             @password,
-            @maestro,
+            @rol,
             @municipio
           )
         `);
@@ -46,7 +47,6 @@ async function guardarRegistro(req, res) {
         res.send({ respuesta: "error" })
     }
 }
-
 
 function generarID() {
     const fecha = new Date();
@@ -62,12 +62,44 @@ function generarID() {
     return id;
 }
 
+async function logueo(req, res) {
+    try {
+        let datos = req.body;
+        let correo = datos.txtCorreologin
+        let password = datos.passwordLogin;
 
-module.exports = {
-    guardarRegistro: guardarRegistro
+        let pool = await conexion.getConexion(); // Esperar a que se resuelva la promesa
+        //let result = await pool.request().query(`SELECT * FROM usuarios`);
+
+        let result = await pool.request().query(`SELECT * FROM usuarios WHERE correo = '${correo}' and contrasena = '${password}'`);
+        //let result = await pool.request().query(`SELECT * FROM usuarios WHERE correo = 'cali@gmail.com' and contrasena = 'juan'`);
+        if (result.recordset) {
+            let recordset = result.recordset[0];
+            let nombreCompleto = recordset.nombre + " " + recordset.apellidos;
+            req.session.nombre = nombreCompleto;
+            req.session.rol = recordset.rol;
+            //console.log(req.session)
+
+            res.send({ respuesta: "loguear" })
+        } else {
+            res.send({ respuesta: "noExiste" })
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
 }
 
-/*
+async function cargarPrincipal(req, res) {
+    if (req.session.nombre) {
+        res.sendFile(path.join(__dirname, "./../views/pagPrincipal.html"))
+    } else {
+        res.sendFile(path.join(__dirname, "./../views/index.html"));
+    }
+}
 
-
-*/
+module.exports = {
+    guardarRegistro: guardarRegistro,
+    logueo: logueo,
+    cargarPrincipal: cargarPrincipal
+}
