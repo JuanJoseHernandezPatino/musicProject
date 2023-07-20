@@ -4,6 +4,7 @@ const path = require("path");
 let principal = require("../controllers/controlPrincipal")
 let instrumentos = require("../controllers/controlInstrumentos")
 let funciones = require("../controllers/controlInicio")
+let eventos = require("../controllers/controlEventos")
 
 
 //#region inicioSesion
@@ -32,6 +33,23 @@ rutas.get("/instrumentos", instrumentos.pantalla)
 rutas.get("/datosInstrumentos", instrumentos.datosInstrumentos)
 
 rutas.post("/guardarInstrumento", instrumentos.guardarInstrumento)
+
+rutas.post("/eliminarInstrumento", instrumentos.eliminarInstrumento)
+
+rutas.post("/datosObservacionesInstrumentos", instrumentos.verObservaciones)
+
+rutas.post("/datosInstrumento", instrumentos.instrumento)
+
+rutas.post("/guardarObservacion", instrumentos.guardarObservacion)
+
+rutas.post("/guardarActualizacionObservacion", instrumentos.actualizarObservacion)
+
+rutas.post("/eliminarObservacion", instrumentos.eliminarObservacion)
+
+//#endregion
+
+//#region eventos
+rutas.get("/enventos", eventos.pantallaEventos)
 
 //#endregion
 module.exports = rutas;

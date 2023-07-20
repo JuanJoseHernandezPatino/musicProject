@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/myStyles.css">
+
+    <title>Eventos</title>
+</head>
+
+<body>
+    <div>
+        <div class="modal fade" id="modalAgregarEvento" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdroLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdroLabel">Agregar evento</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+
+                    <div class="modal-body">
+                        <label class="form-label">Tipo de evento</label>
+                        <select name="" id="tipoDeEvento" class="form-select">
+                            <option value="">--Seleccione una opcion--</option>
+                            <option value="encuentro">Encuentro de bandas</option>
+                            <option value="colecta">Recolecta de fondos</option>
+                            <option value="retreta">Retreta</option>
+                        </select>
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button id="btnCancelarRegistroInstrumento" type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="menu">
+
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h1>
+                <button class="btn btn-outline-success" class="btn btn-success" data-bs-toggle="modal"
+                    data-bs-target="#modalAgregarEvento">Agregar evento</button>
+            </h1>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h2>buttons</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-responsive">
+
+            </table>
+        </div>
+    </div>
+</body>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/scripts/eventos.js"></script>
+
+</html>

@@ -68,16 +68,16 @@ async function logueo(req, res) {
         let correo = datos.txtCorreologin
         let password = datos.passwordLogin;
 
-        let pool = await conexion.getConexion(); // Esperar a que se resuelva la promesa
-        //let result = await pool.request().query(`SELECT * FROM usuarios`);
+        let pool = await conexion.getConexion();
 
         let result = await pool.request().query(`SELECT * FROM usuarios WHERE correo = '${correo}' and contrasena = '${password}'`);
-        //let result = await pool.request().query(`SELECT * FROM usuarios WHERE correo = 'cali@gmail.com' and contrasena = 'juan'`);
+
         if (result.recordset) {
             let recordset = result.recordset[0];
             let nombreCompleto = recordset.nombre + " " + recordset.apellidos;
             req.session.nombre = nombreCompleto;
             req.session.rol = recordset.rol;
+            req.session.municipio = recordset.municipio;
             //console.log(req.session)
 
             res.send({ respuesta: "loguear" })
