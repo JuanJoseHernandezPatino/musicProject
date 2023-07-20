@@ -2,8 +2,12 @@ body {
     margin: 0;
 }
 
-.color-verde {
-    background: #c300ff;
+.color-gris {
+    background: #00c04a;
+}
+
+.color-azul-claro {
+    background: #dbfdff;
 }
 
 .color-azul {

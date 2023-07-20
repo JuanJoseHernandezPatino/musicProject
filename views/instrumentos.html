@@ -11,14 +11,15 @@
     <title>Document</title>
 </head>
 
-<body>
-    <div id="modalAgregarInstrumento">
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<body style="overflow-x: hidden;">
+    <div> <!--divicion de los modales  -->
+
+        <div class="modal fade" id="modalAgregarInstrumento" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdroLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Agregar Instrumento</h5>
+                        <h5 class="modal-title" id="staticBackdroLabel">Agregar Instrumento</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                             onclick="cancelarInstrumento()"></button>
                     </div>
@@ -28,6 +29,8 @@
                         <label class="form-label">Instrumento</label>
                         <input class="form-control" type="text" id="nombreInstrumento"
                             placeholder="ej: Flauta Traversa">
+                        <label class="form-label mt-3">Marca</label>
+                        <input type="text" class="form-control" id="marcaInstrumento" placeholder="ej: YAMAHA">
                         <label class="form-label mt-3">Serial</label>
                         <input type="text" class="form-control" id="serialInstrumento" placeholder="ej: SK239NDF">
                         <label class="form-label mt-3">Observaciones</label>
@@ -44,30 +47,138 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="modalVerObservaciones" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdroLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content color-azul-claro">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdroLabel">Observaciones</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+
+                    <div class="modal-body">
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Marca</th>
+                                    <th>Serial</th>
+                                    <th>fecha</th>
+                                    <th>Observación</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblObservaciones">
+
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div class="modal-footer">
+
+                        <button onclick="" type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                            data-bs-target="#modalAgregarObservacion" data-bs-dismiss="modal"
+                            id="btnAgregarObservacionModal">Agregar
+                            observación</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                            onclick="cerrarVerObservacion()">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalAgregarObservacion" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdroLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdroLabel">Observaciones</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+
+                    <div class="modal-body">
+                        <label class="form-label">Nombre: </label>
+                        <label class="form-label" id="nombreInstrumentoObservacion"></label>
+                        <br>
+                        <label class="form-label">Marca: </label>
+                        <label class="form-label" id="marcaInstrumentoObservacion"></label>
+                        <br>
+                        <label class="form-label">Serial: </label>
+                        <label class="form-label" id="serialInstrumentoObservacion"></label>
+                        <br>
+                        <label class="form-label">Nueva observacion: </label>
+                        <textarea class="form-control" id="nuevaObservacion" rows="5"
+                            placeholder="ej: Color mate, abolladura en la boquilla"></textarea>
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button onclick="guardarObservacion()" type="button" class="btn btn-secondary"
+                            id="btnAgregarObservacion">Agregar
+                            observación</button>
+                        <button id="btnCancelarObservacion" type="button" class="btn btn-primary"
+                            onclick="cancelarObservacion()" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalActualizarObservacion" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdroLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content color-azul">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdroLabel">Actualizar observación</h5>
+                        <label id="serialInstrumentoActualizacion" style="display: none;"></label>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+
+                    <div class="modal-body">
+                        <label class="form-label mt-3">Observación</label>
+                        <textarea class="form-control" id="actualizarObservacion" rows="5"></textarea>
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button id="btnCancelarRegistroInstrumento" type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="btnGuardarActualizacionObservacion"
+                            data-bs-dismiss="modal">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="menu">
 
     </div>
 
-    <div class="card color-azul">
-        <div class="card-tittle centrado">
+    <div class="card color-azul min-vh-100">
+        <div class=" card-tittle centrado">
             <h1>Instrumental</h1>
         </div>
         <div class="card-body">
             <div class="col">
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                    data-bs-target="#modalAgregarInstrumento">
                     Agregar Instrumento
                 </button>
             </div>
 
             <div class="col">
 
-                <table class="table table-dark table-hover mt-3">
+                <table class="table table-responsive table-dark table-hover mt-3">
                     <thead class="centrado">
                         <tr>
                             <th>Nombre</th>
                             <th>Serial</th>
+                            <th>Marca</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>

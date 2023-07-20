@@ -98,7 +98,7 @@ function limpiarRegistro() {
 //#endregion
 
 function limpiarLogin() {
-    document.getElementById("txtContrasenaLogin").value = "";
+    document.getElementById("passwordLogin").value = "";
     document.getElementById("txtCorreologin").value = "";
 }
 
